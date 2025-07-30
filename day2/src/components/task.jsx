@@ -1,7 +1,8 @@
-export default function Task({text, handleDelete, handleComplete}) {
+export default function Task({text, handleDelete, handleComplete, status}) {
     return (
         <li className="flex items-center justify-between border border-gray-300 rounded-md p-2">
-            <p>{text}</p>
+            {status === 'done' ? <del>{text}</del> : <p>{text}</p>}
+
 
             <div className="flex gap-2">
                 <button onClick={handleDelete} className="cursor-pointer">🗑</button> 

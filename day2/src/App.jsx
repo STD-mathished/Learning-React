@@ -6,6 +6,7 @@ import Task from './components/task'
 function App() {
   const [tasks, setTasks] = useState([])
   const [text, setText] = useState('')
+  const [status, setStatus] = useState('')
 
   {/* Form doesn't submit */}
   const handleSubmit = (e) => {
@@ -14,7 +15,8 @@ function App() {
   {/* NEW TASK */}
     const newTask = {
       id: Date.now(),
-      text
+      text,
+      status
   }
   {/* Emptying the fields */}
     setTasks([...tasks, newTask])
@@ -26,8 +28,8 @@ function App() {
     setTasks(tasks.filter(task => task.id !== id));
   }
 
-  function handleComplete() {
-    alert("done")
+  const handleComplete = (id) => {
+    setStatus('done')
   }
   
 
@@ -38,7 +40,7 @@ function App() {
       <ul className='ml-1.5 mr-1.5 flex flex-col gap-3'>
         {
           tasks.map((task) => (
-            <Task key={task.id} text={task.text} handleDelete={() => handleDelete(task.id)} handleComplete={handleComplete}/>
+            <Task key={task.id} text={task.text} handleDelete={() => handleDelete(task.id)} handleComplete={handleComplete} status={status}/>
           ))
         }
       </ul>

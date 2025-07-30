@@ -6,7 +6,6 @@ import Task from './components/task'
 function App() {
   const [tasks, setTasks] = useState([])
   const [text, setText] = useState('')
-  const [status, setStatus] = useState('')
 
   {/* Form doesn't submit */}
   const handleSubmit = (e) => {
@@ -16,7 +15,7 @@ function App() {
     const newTask = {
       id: Date.now(),
       text,
-      status
+      status: 'pending'
   }
   {/* Emptying the fields */}
     setTasks([...tasks, newTask])
@@ -29,8 +28,11 @@ function App() {
   }
 
   const handleComplete = (id) => {
-    setStatus('done')
-  }
+    const updatedTasks = tasks.map(task =>
+      task.id === id ? { ...task, status: "done" } : task
+    );
+  setTasks(updatedTasks);
+};
   
 
   return (
@@ -40,7 +42,7 @@ function App() {
       <ul className='ml-1.5 mr-1.5 flex flex-col gap-3'>
         {
           tasks.map((task) => (
-            <Task key={task.id} text={task.text} handleDelete={() => handleDelete(task.id)} handleComplete={handleComplete} status={status}/>
+            <Task key={task.id} text={task.text} handleDelete={() => handleDelete(task.id)} handleComplete={() => handleComplete(task.id)} status={task.status}/>
           ))
         }
       </ul>

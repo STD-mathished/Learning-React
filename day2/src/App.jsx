@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import Form from './components/form'
 import Task from './components/task'
@@ -6,6 +6,20 @@ import Task from './components/task'
 function App() {
   const [tasks, setTasks] = useState([])
   const [text, setText] = useState('')
+  
+  {/* Saving tasks in the local storage */}
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
+  {/* fetch all the tasks */}
+useEffect(() => {
+  const savedTasks = localStorage.getItem("tasks");
+  if (savedTasks) {
+    setTasks(JSON.parse(savedTasks));
+  }
+}, []); // [] --> execute once
+
 
   {/* Form doesn't submit */}
   const handleSubmit = (e) => {
